@@ -21,13 +21,14 @@ public class SecurityConfig {
 
     // Các endpoint không cần authen vẫn truy cập được
     private final String[] PUBLIC_ENDPOINTS = {
-            "api/v1/auth/login",
-            "api/v1/auth/register",
+            "/api/v1/auth/login",
+            "/api/v1/auth/register",
             "/uploads/**",
-            "/v3/api-docs/**",
-            "/swagger-ui/**",
-            "/swagger-ui.html"
+            "/api-docs/**",
+            "/swagger-ui.html",
+            "/swagger-ui/**"
     };
+
 
     private final CustomJwtDecoder customJwtDecoder;
 
