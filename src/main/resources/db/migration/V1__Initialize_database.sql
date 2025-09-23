@@ -22,48 +22,20 @@ CREATE TABLE categories
 );
 
 -- =========================
--- TABLE: books
+-- TABLE: books - Lưu thông tin chung về một đầu sách.
 -- =========================
-CREATE TABLE books - Lưu thông tin chung về một đầu sách
+CREATE TABLE books
 (
-    tiêu
-    đề,
-    ISBN,
-    năm
-    xuất
-    bản
-    .
-    .
-    .
-).
-(
-    book_id
-    SERIAL
-    PRIMARY
-    KEY,
-    title
-    VARCHAR
-(
-    255
-) NOT NULL,
-    isbn VARCHAR
-(
-    20
-) UNIQUE,
+    book_id          SERIAL PRIMARY KEY,
+    title            VARCHAR(255) NOT NULL,
+    isbn             VARCHAR(20) UNIQUE,
     publication_year INT,
-    description TEXT,
-    publisher_id INT REFERENCES publishers
-(
-    publisher_id
-) ON DELETE SET NULL,
-    category_id INT REFERENCES categories
-(
-    category_id
-)
-  ON DELETE SET NULL,
-    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
-    );
+    description      TEXT,
+    publisher_id     INT          REFERENCES publishers (publisher_id) ON DELETE SET NULL,
+    category_id      INT          REFERENCES categories (category_id) ON DELETE SET NULL,
+    created_at       TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at       TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
 
 -- =========================
 -- TABLE: authors - Lưu thông tin về tác giả.
@@ -102,40 +74,21 @@ CREATE TABLE book_copies
 );
 
 -- =========================
--- TABLE: members
+-- TABLE: members - Lưu thông tin về bạn đọc/thành viên của thư viện.
 -- =========================
-CREATE TABLE members - Lưu thông tin về bạn đọc/thành viên của thư viện.
+CREATE TABLE members
 (
-    member_id
-    SERIAL
-    PRIMARY
-    KEY,
-    full_name
-    VARCHAR
-(
-    100
-) NOT NULL,
-    email VARCHAR
-(
-    100
-) UNIQUE,
-    phone_number VARCHAR
-(
-    20
-),
-    address VARCHAR
-(
-    255
-),
-    card_number VARCHAR
-(
-    50
-) UNIQUE NOT NULL,
-    registration_date DATE NOT NULL,
-    expiry_date DATE NOT NULL,
-    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
-    );
+    member_id         SERIAL PRIMARY KEY,
+    full_name         VARCHAR(100)       NOT NULL,
+    email             VARCHAR(100) UNIQUE,
+    phone_number      VARCHAR(20),
+    address           VARCHAR(255),
+    card_number       VARCHAR(50) UNIQUE NOT NULL,
+    registration_date DATE               NOT NULL,
+    expiry_date       DATE               NOT NULL,
+    created_at        TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at        TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
 
 -- =========================
 -- TABLE: loans - Ghi lại các giao dịch mượn sách.
