@@ -1,4 +1,4 @@
-package com.example.librarymanagementwebsite.security;
+package com.example.librarymanagementwebsite.security.config;
 
 import com.example.librarymanagementwebsite.ApiResponse;
 import com.example.librarymanagementwebsite.exception.ErrorCode;

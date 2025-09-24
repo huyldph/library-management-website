@@ -1,4 +1,4 @@
-package com.example.librarymanagementwebsite.security;
+package com.example.librarymanagementwebsite.security.config;
 
 import com.nimbusds.jwt.SignedJWT;
 import org.springframework.security.oauth2.jwt.Jwt;
