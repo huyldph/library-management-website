@@ -140,20 +140,6 @@ CREATE TABLE fines
 );
 
 -- =========================
--- TABLE: users - Lưu thông tin tài khoản đăng nhập hệ thống của nhân viên (Thủ thư, Admin).
--- =========================
-CREATE TABLE users
-(
-    user_id       SERIAL PRIMARY KEY,
-    username      VARCHAR(50) UNIQUE NOT NULL,
-    password_hash VARCHAR(255)       NOT NULL,
-    full_name     VARCHAR(100),
-    email         VARCHAR(100) UNIQUE,
-    created_at    TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    updated_at    TIMESTAMP DEFAULT CURRENT_TIMESTAMP
-);
-
--- =========================
 -- TABLE: roles -  Định nghĩa các vai trò trong hệ thống.
 -- =========================
 CREATE TABLE roles
@@ -166,11 +152,16 @@ CREATE TABLE roles
 );
 
 -- =========================
--- TABLE: user_roles (many-to-many)
+-- TABLE: users - Lưu thông tin tài khoản đăng nhập hệ thống của nhân viên (Thủ thư, Admin).
 -- =========================
-CREATE TABLE user_roles
+CREATE TABLE users
 (
-    user_id INT REFERENCES users (user_id) ON DELETE CASCADE,
-    role_id INT REFERENCES roles (role_id) ON DELETE CASCADE,
-    PRIMARY KEY (user_id, role_id)
+    user_id       SERIAL PRIMARY KEY,
+    role_id       INT                REFERENCES roles (role_id) ON DELETE SET NULL,
+    username      VARCHAR(50) UNIQUE NOT NULL,
+    password_hash VARCHAR(255)       NOT NULL,
+    full_name     VARCHAR(100),
+    email         VARCHAR(100) UNIQUE,
+    created_at    TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at    TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
