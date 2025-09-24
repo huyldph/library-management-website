@@ -1,7 +1,5 @@
-package com.example.librarymanagementwebsite.config;
+package com.example.librarymanagementwebsite.security.config;
 
-import com.example.librarymanagementwebsite.security.CustomJwtDecoder;
-import com.example.librarymanagementwebsite.security.JwtAuthenticationEntryPoint;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
@@ -23,6 +21,9 @@ public class SecurityConfig {
     private final String[] PUBLIC_ENDPOINTS = {
             "/api/v1/auth/login",
             "/api/v1/auth/register",
+            "/api/v1/auth/refresh",
+            "/api/v1/auth/introspect",
+            "/api/v1/auth/logout",
             "/uploads/**",
             "/api-docs/**",
             "/swagger-ui.html",
