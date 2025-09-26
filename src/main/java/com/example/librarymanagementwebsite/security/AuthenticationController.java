@@ -1,9 +1,9 @@
 package com.example.librarymanagementwebsite.security;
 
 import com.example.librarymanagementwebsite.ApiResponse;
-import com.example.librarymanagementwebsite.account.AccountService;
-import com.example.librarymanagementwebsite.account.dto.RegisterRequest;
-import com.example.librarymanagementwebsite.account.dto.RegisterResponse;
+import com.example.librarymanagementwebsite.feature.account.AccountService;
+import com.example.librarymanagementwebsite.feature.account.dto.RegisterRequest;
+import com.example.librarymanagementwebsite.feature.account.dto.RegisterResponse;
 import com.example.librarymanagementwebsite.security.dto.*;
 import com.nimbusds.jose.JOSEException;
 import lombok.AccessLevel;

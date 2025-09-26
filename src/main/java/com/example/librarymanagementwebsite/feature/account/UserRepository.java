@@ -1,4 +1,4 @@
-package com.example.librarymanagementwebsite.account;
+package com.example.librarymanagementwebsite.feature.account;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;

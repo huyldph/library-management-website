@@ -1,8 +1,8 @@
-package com.example.librarymanagementwebsite.account.mapper;
+package com.example.librarymanagementwebsite.feature.account.mapper;
 
-import com.example.librarymanagementwebsite.account.User;
-import com.example.librarymanagementwebsite.account.dto.RegisterRequest;
-import com.example.librarymanagementwebsite.account.dto.RegisterResponse;
+import com.example.librarymanagementwebsite.feature.account.User;
+import com.example.librarymanagementwebsite.feature.account.dto.RegisterRequest;
+import com.example.librarymanagementwebsite.feature.account.dto.RegisterResponse;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 
