@@ -1,7 +1,7 @@
 package com.example.librarymanagementwebsite.security;
 
-import com.example.librarymanagementwebsite.account.User;
-import com.example.librarymanagementwebsite.account.UserRepository;
+import com.example.librarymanagementwebsite.feature.account.User;
+import com.example.librarymanagementwebsite.feature.account.UserRepository;
 import com.example.librarymanagementwebsite.exception.AppException;
 import com.example.librarymanagementwebsite.exception.ErrorCode;
 import com.example.librarymanagementwebsite.security.dto.*;

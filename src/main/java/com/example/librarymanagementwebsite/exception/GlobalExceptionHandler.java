@@ -1,6 +1,6 @@
 package com.example.librarymanagementwebsite.exception;
 
-import com.example.librarymanagementwebsite.ApiResponse;
+import com.example.librarymanagementwebsite.util.ApiResponse;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.AccessDeniedException;

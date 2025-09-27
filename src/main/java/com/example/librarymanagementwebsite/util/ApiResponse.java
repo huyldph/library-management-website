@@ -1,4 +1,4 @@
-package com.example.librarymanagementwebsite;
+package com.example.librarymanagementwebsite.util;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.*;

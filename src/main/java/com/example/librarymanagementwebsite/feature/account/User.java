@@ -1,4 +1,4 @@
-package com.example.librarymanagementwebsite.account;
+package com.example.librarymanagementwebsite.feature.account;
 
 import jakarta.persistence.*;
 import lombok.*;

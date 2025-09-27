@@ -1,4 +1,4 @@
-package com.example.librarymanagementwebsite.account.dto;
+package com.example.librarymanagementwebsite.feature.account.dto;
 
 import lombok.*;
 import lombok.experimental.FieldDefaults;

@@ -1,8 +1,8 @@
-package com.example.librarymanagementwebsite.account;
+package com.example.librarymanagementwebsite.feature.account;
 
-import com.example.librarymanagementwebsite.account.dto.RegisterRequest;
-import com.example.librarymanagementwebsite.account.dto.RegisterResponse;
-import com.example.librarymanagementwebsite.account.mapper.UserMapper;
+import com.example.librarymanagementwebsite.feature.account.dto.RegisterRequest;
+import com.example.librarymanagementwebsite.feature.account.dto.RegisterResponse;
+import com.example.librarymanagementwebsite.feature.account.mapper.UserMapper;
 import com.example.librarymanagementwebsite.constant.PredefinedRole;
 import com.example.librarymanagementwebsite.exception.AppException;
 import com.example.librarymanagementwebsite.exception.ErrorCode;

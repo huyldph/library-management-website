@@ -1,35 +1,38 @@
-package com.example.librarymanagementwebsite.account;
+package com.example.librarymanagementwebsite.feature.publisher;
 
+import com.example.librarymanagementwebsite.feature.book.Book;
 import jakarta.persistence.*;
 import lombok.*;
 
 import java.time.LocalDateTime;
+import java.util.HashSet;
 import java.util.Set;
 
+@Entity
+@Table(name = "publishers")
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-@Entity
-@Table(name = "roles")
-public class Role {
+public class Publisher {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "role_id", nullable = false)
-    private Integer roleId;
+    @Column(name = "publisher_id")
+    private Integer publisherId;
 
-    @Column(name = "role_name", nullable = false, unique = true)
-    private String roleName;
-
-    @Column(name = "description")
-    private String description;
+    @Column(name = "publisher_name", nullable = false, length = 100)
+    private String publisherName;
 
     @Column(name = "created_at", nullable = false, updatable = false)
     private LocalDateTime createdAt;
 
     @Column(name = "updated_at", nullable = false)
     private LocalDateTime updatedAt;
+
+    // Quan hệ 1-nhiều với Book
+    @OneToMany(mappedBy = "publisher", cascade = CascadeType.ALL, orphanRemoval = true)
+    private Set<Book> books = new HashSet<>();
 
     @PrePersist
     protected void onCreate() {
@@ -41,7 +44,4 @@ public class Role {
     protected void onUpdate() {
         updatedAt = LocalDateTime.now();
     }
-
-    @OneToMany(mappedBy = "role", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    private Set<User> users;
 }
