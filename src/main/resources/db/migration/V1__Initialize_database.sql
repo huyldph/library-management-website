@@ -21,6 +21,36 @@ CREATE TABLE categories
     updated_at    TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
+-- Bảng shelves – Quản lý kệ sách
+CREATE TABLE shelves
+(
+    shelf_id   SERIAL PRIMARY KEY,
+    floor      INT         NOT NULL, -- tầng
+    code       VARCHAR(20) NOT NULL, -- mã kệ (A1, A2…)
+    capacity   INT         NOT NULL, -- tổng số slot trong kệ
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+-- Bảng shelf_slots – Quản lý từng ô/ngăn trong kệ
+CREATE TABLE shelf_slots
+(
+    slot_id     SERIAL PRIMARY KEY,
+    shelf_id    INT NOT NULL REFERENCES shelves (shelf_id) ON DELETE CASCADE,
+    position    INT NOT NULL,            -- số thứ tự ngăn (1,2,3…)
+    is_occupied BOOLEAN   DEFAULT FALSE, -- TRUE nếu đã có sách
+    created_at  TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at  TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+-- Bảng category_shelving – Mapping thể loại → kệ
+CREATE TABLE category_shelving
+(
+    category_id INT NOT NULL REFERENCES categories (category_id) ON DELETE CASCADE,
+    shelf_id    INT NOT NULL REFERENCES shelves (shelf_id) ON DELETE CASCADE,
+    PRIMARY KEY (category_id, shelf_id)
+);
+
 -- =========================
 -- TABLE: books - Lưu thông tin chung về một đầu sách.
 -- =========================
@@ -29,6 +59,7 @@ CREATE TABLE books
     book_id          SERIAL PRIMARY KEY,
     title            VARCHAR(255) NOT NULL,
     isbn             VARCHAR(20) UNIQUE,
+    author           VARCHAR(100) NOT NULL,
     publication_year INT,
     description      TEXT,
     publisher_id     INT          REFERENCES publishers (publisher_id) ON DELETE SET NULL,
@@ -38,39 +69,19 @@ CREATE TABLE books
 );
 
 -- =========================
--- TABLE: authors - Lưu thông tin về tác giả.
--- =========================
-CREATE TABLE authors
-(
-    author_id   SERIAL PRIMARY KEY,
-    author_name VARCHAR(100) NOT NULL,
-    created_at  TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    updated_at  TIMESTAMP DEFAULT CURRENT_TIMESTAMP
-);
-
--- =========================
--- TABLE: book_authors (many-to-many)
--- =========================
-CREATE TABLE book_authors
-(
-    book_id   INT REFERENCES books (book_id) ON DELETE CASCADE,
-    author_id INT REFERENCES authors (author_id) ON DELETE CASCADE,
-    PRIMARY KEY (book_id, author_id)
-);
-
--- =========================
 -- TABLE: book_copies -  Lưu thông tin về từng bản sao vật lý của một đầu sách.
 -- =========================
 CREATE TABLE book_copies
 (
-    copy_id    SERIAL PRIMARY KEY,
-    book_id    INT                NOT NULL REFERENCES books (book_id) ON DELETE CASCADE,
-    barcode    VARCHAR(50) UNIQUE NOT NULL,
-    status     VARCHAR(20)        NOT NULL DEFAULT 'Available'
+    copy_id           SERIAL PRIMARY KEY,
+    book_id           INT                NOT NULL REFERENCES books (book_id) ON DELETE CASCADE,
+    barcode           VARCHAR(50) UNIQUE NOT NULL,
+    barcode_image_url TEXT,
+    status            VARCHAR(20)        NOT NULL DEFAULT 'Available'
         CHECK (status IN ('Available', 'Loaned', 'Lost', 'Damaged', 'Reserved')),
-    location   VARCHAR(100),
-    created_at TIMESTAMP                   DEFAULT CURRENT_TIMESTAMP,
-    updated_at TIMESTAMP                   DEFAULT CURRENT_TIMESTAMP
+    slot_id           INT REFERENCES shelf_slots (slot_id), -- vị trí sách trên kệ
+    created_at        TIMESTAMP                   DEFAULT CURRENT_TIMESTAMP,
+    updated_at        TIMESTAMP                   DEFAULT CURRENT_TIMESTAMP
 );
 
 -- =========================
