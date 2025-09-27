@@ -2,6 +2,7 @@ package com.example.librarymanagementwebsite.security.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -19,11 +20,7 @@ public class SecurityConfig {
 
     // Các endpoint không cần authen vẫn truy cập được
     private final String[] PUBLIC_ENDPOINTS = {
-            "/api/v1/auth/login",
-            "/api/v1/auth/register",
-            "/api/v1/auth/refresh",
-            "/api/v1/auth/introspect",
-            "/api/v1/auth/logout",
+            "/api/v1/auth/**",
             "/uploads/**",
             "/api-docs/**",
             "/swagger-ui.html",
@@ -43,7 +40,58 @@ public class SecurityConfig {
                 .requestMatchers(PUBLIC_ENDPOINTS) // các đường dẫn public
                 .permitAll()
 
-                .requestMatchers("/api/v1/employee/**").permitAll()
+                // phân quyền cho các endpoint /api/v1/books
+                .requestMatchers(HttpMethod.GET,
+                        "/api/v1/books/**"
+                )
+                .permitAll()
+                .requestMatchers(
+                        "/api/v1/books/create",
+                        "/api/v1/books/update/**",
+                        "/api/v1/books/delete/**"
+                ).hasAnyRole("STAFF", "ADMIN")
+
+                // phân quyền cho các endpoint /api/v1/categories
+                .requestMatchers(HttpMethod.GET,
+                        "/api/v1/categories/**"
+                )
+                .permitAll()
+                .requestMatchers(
+                        "/api/v1/categories/create",
+                        "/api/v1/categories/update/**"
+                ).hasAnyRole("STAFF", "ADMIN")
+
+                // phân quyền cho các endpoint /api/v1/publishers
+                .requestMatchers(HttpMethod.GET,
+                        "/api/v1/publishers/**"
+                )
+                .permitAll()
+                .requestMatchers(
+                        "/api/v1/publishers/create",
+                        "/api/v1/publishers/update/**"
+                ).hasAnyRole("STAFF", "ADMIN")
+
+                // phân quyền cho các endpoint /api/v1/shelves
+                .requestMatchers(HttpMethod.GET,
+                        "/api/v1/shelves/**"
+                )
+                .permitAll()
+                .requestMatchers(
+                        "/api/v1/publishers/create",
+                        "/api/v1/publishers/update/**"
+                ).hasAnyRole("STAFF", "ADMIN")
+
+                // phân quyền cho các endpoint /api/v1/book-copies
+                .requestMatchers(HttpMethod.GET,
+                        "/api/v1/book-copies/**"
+                )
+                .permitAll()
+                .requestMatchers(
+                        "/api/v1/book-copies/create",
+                        "/api/v1/book-copies/update/**"
+                ).hasAnyRole("STAFF", "ADMIN")
+
+                // Các đường dẫn khác cần authen
                 .anyRequest()
                 .authenticated());
 
