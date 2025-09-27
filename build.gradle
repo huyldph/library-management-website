@@ -63,6 +63,15 @@ dependencies {
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
     testImplementation 'org.springframework.security:spring-security-test'
     testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
+
+    //Cloudinary
+    implementation 'com.cloudinary:cloudinary-http44:1.33.0'
+
+    // ZXing core để encode barcode
+    implementation 'com.google.zxing:core:3.5.2'
+
+    // ZXing javase để hỗ trợ xuất ảnh (MatrixToImageWriter)
+    implementation 'com.google.zxing:javase:3.5.2'
 }
 
 tasks.named('test') {

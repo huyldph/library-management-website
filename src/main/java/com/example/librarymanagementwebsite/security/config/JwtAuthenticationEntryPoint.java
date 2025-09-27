@@ -1,6 +1,6 @@
 package com.example.librarymanagementwebsite.security.config;
 
-import com.example.librarymanagementwebsite.ApiResponse;
+import com.example.librarymanagementwebsite.util.ApiResponse;
 import com.example.librarymanagementwebsite.exception.ErrorCode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.servlet.ServletException;
