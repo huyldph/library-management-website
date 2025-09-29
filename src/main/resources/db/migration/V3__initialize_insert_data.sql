@@ -64,10 +64,10 @@ VALUES ('Nguyễn Văn A', 'a@example.com', '0909123456', 'Hà Nội', 'CARD001'
 -- =========================
 -- INSERT loans
 -- =========================
-INSERT INTO loans (copy_id, member_id, loan_date, due_date, return_date, status)
-VALUES (2, 1, '2025-09-01', '2025-09-15', NULL, 'Active'),
-       (3, 2, '2025-08-10', '2025-08-24', '2025-08-22', 'Returned'),
-       (4, 3, '2025-07-05', '2025-07-19', NULL, 'Overdue');
+INSERT INTO loans (loan_code,copy_id, member_id, loan_date, due_date, return_date, status)
+VALUES ('L001',2, 1, '2025-09-01', '2025-09-15', NULL, 'Active'),
+       ('L002',3, 2, '2025-08-10', '2025-08-24', '2025-08-22', 'Returned'),
+       ('L003',4, 3, '2025-07-05', '2025-07-19', NULL, 'Overdue');
 
 -- =========================
 -- INSERT reservations
