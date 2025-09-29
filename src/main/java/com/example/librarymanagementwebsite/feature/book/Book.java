@@ -47,7 +47,7 @@ public class Book {
     @JoinColumn(name = "category_id", referencedColumnName = "category_id")
     private Category category;
 
-    @OneToMany(mappedBy = "book", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "book", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
     private List<BookCopy> bookCopies;
 
     @Column(name = "created_at", nullable = false, updatable = false)

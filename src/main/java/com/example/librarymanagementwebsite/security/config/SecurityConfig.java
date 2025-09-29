@@ -91,6 +91,28 @@ public class SecurityConfig {
                         "/api/v1/book-copies/update/**"
                 ).hasAnyRole("STAFF", "ADMIN")
 
+                // phân quyền cho các endpoint /api/v1/members
+                .requestMatchers(
+                        "/api/v1/members/{memberId}",
+                        "/api/v1/members/create",
+                        "/api/v1/members/update/**"
+                )
+                .permitAll()
+                .requestMatchers(
+                        "/api/v1/members"
+                ).hasAnyRole("STAFF", "ADMIN")
+
+                // phân quyền cho các endpoint /api/v1/loans
+                .requestMatchers(HttpMethod.GET,
+                        "/api/v1/loans/by-member"
+                )
+                .permitAll()
+                .requestMatchers(
+                        "api/v1/loans",
+                        "/api/v1/loans/create",
+                        "/api/v1/loans/update/**"
+                ).hasAnyRole("STAFF", "ADMIN")
+
                 // Các đường dẫn khác cần authen
                 .anyRequest()
                 .authenticated());

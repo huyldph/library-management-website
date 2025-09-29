@@ -107,15 +107,16 @@ CREATE TABLE members
 CREATE TABLE loans
 (
     loan_id     SERIAL PRIMARY KEY,
-    copy_id     INT         NOT NULL REFERENCES book_copies (copy_id) ON DELETE CASCADE,
-    member_id   INT         NOT NULL REFERENCES members (member_id) ON DELETE CASCADE,
-    loan_date   DATE        NOT NULL,
-    due_date    DATE        NOT NULL,
+    loan_code   VARCHAR(50) UNIQUE NOT NULL,
+    copy_id     INT                NOT NULL REFERENCES book_copies (copy_id) ON DELETE CASCADE,
+    member_id   INT                NOT NULL REFERENCES members (member_id) ON DELETE CASCADE,
+    loan_date   DATE               NOT NULL,
+    due_date    DATE               NOT NULL,
     return_date DATE,
-    status      VARCHAR(20) NOT NULL DEFAULT 'Active'
+    status      VARCHAR(20)        NOT NULL DEFAULT 'Active'
         CHECK (status IN ('Active', 'Returned', 'Overdue')),
-    created_at  TIMESTAMP            DEFAULT CURRENT_TIMESTAMP,
-    updated_at  TIMESTAMP            DEFAULT CURRENT_TIMESTAMP
+    created_at  TIMESTAMP                   DEFAULT CURRENT_TIMESTAMP,
+    updated_at  TIMESTAMP                   DEFAULT CURRENT_TIMESTAMP
 );
 
 -- =========================
