@@ -7,10 +7,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import org.springframework.data.domain.Page;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api/v1/loans")
@@ -43,6 +40,30 @@ public class LoanController {
         return ApiResponse.builder()
                 .result(loans)
                 .message("Get loans for member with id: " + memberId)
+                .build();
+    }
+
+    @PostMapping("/checkout")
+    ApiResponse<?> checkout(
+            @RequestParam String cardNumber,
+            @RequestParam String bookBarcode
+    ) {
+        LoanResponse loanResponse = loanService.checkout(cardNumber, bookBarcode);
+        return ApiResponse.builder()
+                .result(loanResponse)
+                .message("Checkout book successfully")
+                .build();
+    }
+
+    @PutMapping("/checkin")
+    @PreAuthorize("hasAnyRole('ADMIN', 'STAFF')")
+    ApiResponse<?> checkin(
+            @RequestParam String bookBarcode
+    ) {
+        LoanResponse loanResponse = loanService.checkin(bookBarcode);
+        return ApiResponse.builder()
+                .result(loanResponse)
+                .message("Checkin book successfully")
                 .build();
     }
 }
