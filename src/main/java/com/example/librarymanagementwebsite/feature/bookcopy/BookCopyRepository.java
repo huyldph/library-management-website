@@ -7,6 +7,8 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
+import java.util.Optional;
+
 @Repository
 public interface BookCopyRepository extends JpaRepository<BookCopy, Integer> {
     @Query("""
@@ -17,4 +19,6 @@ public interface BookCopyRepository extends JpaRepository<BookCopy, Integer> {
             WHERE b.bookId = :bookId
             """)
     Page<BookCopy> findByBookId(@Param("bookId") Integer bookId, Pageable pageable);
+
+    Optional<BookCopy> findByBarcode(String barcode);
 }
