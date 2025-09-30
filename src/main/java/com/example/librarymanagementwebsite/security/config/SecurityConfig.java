@@ -109,8 +109,8 @@ public class SecurityConfig {
                 .permitAll()
                 .requestMatchers(
                         "api/v1/loans",
-                        "/api/v1/loans/create",
-                        "/api/v1/loans/update/**"
+                        "/api/v1/loans/checkout",
+                        "/api/v1/loans/checkin"
                 ).hasAnyRole("STAFF", "ADMIN")
 
                 // Các đường dẫn khác cần authen
