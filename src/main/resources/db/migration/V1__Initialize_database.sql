@@ -97,6 +97,8 @@ CREATE TABLE members
     card_number       VARCHAR(50) UNIQUE NOT NULL,
     registration_date DATE               NOT NULL,
     expiry_date       DATE               NOT NULL,
+    status            VARCHAR(20)        NOT NULL DEFAULT 'Active'
+        CHECK (status IN ('Active', 'Inactive', 'Suspended')),
     created_at        TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     updated_at        TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
