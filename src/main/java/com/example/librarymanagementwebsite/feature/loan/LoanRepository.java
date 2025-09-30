@@ -7,6 +7,8 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
+import java.util.Optional;
+
 @Repository
 public interface LoanRepository extends JpaRepository<Loan, Integer> {
 
@@ -18,4 +20,6 @@ public interface LoanRepository extends JpaRepository<Loan, Integer> {
                     WHERE m.memberId = :memberId
             """)
     Page<Loan> findByMemberId(@Param("memberId") Integer memberId, Pageable pageable);
+
+    Optional<Loan> findActiveLoanByBookCopy_CopyId(Integer bookCopyCopyId);
 }

@@ -1,5 +1,6 @@
 package com.example.librarymanagementwebsite.feature.member;
 
+import com.example.librarymanagementwebsite.constant.MemberStatus;
 import com.example.librarymanagementwebsite.feature.loan.Loan;
 import jakarta.persistence.*;
 import lombok.*;
@@ -44,6 +45,10 @@ public class Member {
     @Column(name = "expiry_date", nullable = false)
     private LocalDate expiryDate;
 
+    @Enumerated(EnumType.STRING)
+    @Column(name = "status", length = 20, nullable = false)
+    private MemberStatus status;
+
     @OneToMany(mappedBy = "member", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
     private List<Loan> loans;
 
@@ -60,11 +65,18 @@ public class Member {
         if (cardNumber == null || cardNumber.isEmpty()) {
             cardNumber = renderCardNumber();
         }
+        if (status == null) {
+            status = MemberStatus.Active;
+        }
+        if (registrationDate == null) {
+            registrationDate = LocalDate.now();
+        }
     }
 
     @PreUpdate
     protected void onUpdate() {
         updatedAt = LocalDateTime.now();
+        updateStatus();
     }
 
     private String renderCardNumber() {
@@ -72,5 +84,39 @@ public class Member {
         int randomPart = new Random().nextInt(9000) + 1000;
 
         return "CARD-" + datePart + "-" + randomPart;
+    }
+
+    // Check thẻ hết hạn
+    public boolean isCardExpired() {
+        return expiryDate.isBefore(LocalDate.now());
+    }
+
+    // Đếm số sách đang mượn
+    public long countBorrowedBooks() {
+        if (loans == null) return 0;
+        return loans.stream()
+                .filter(loan -> "Active".equalsIgnoreCase(String.valueOf(loan.getStatus())))
+                .count();
+    }
+
+    // Đếm số lần trả muộn
+    private long countLateReturns() {
+        if (loans == null) return 0;
+        return loans.stream()
+                .filter(loan -> loan.getReturnDate() != null
+                        && loan.getDueDate() != null
+                        && loan.getReturnDate().isAfter(loan.getDueDate()))
+                .count();
+    }
+
+    // Cập nhật trạng thái thẻ
+    private void updateStatus() {
+        if (isCardExpired()) {
+            this.status = MemberStatus.Inactive;
+        } else if (countLateReturns() > 3) {
+            this.status = MemberStatus.Suspended;
+        } else {
+            this.status = MemberStatus.Active;
+        }
     }
 }
