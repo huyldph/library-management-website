@@ -113,6 +113,11 @@ public class SecurityConfig {
                         "/api/v1/loans/checkin"
                 ).hasAnyRole("STAFF", "ADMIN")
 
+                // phân quyền cho các endpoint /api/v1/statistics
+                .requestMatchers(
+                        "/api/v1/statistics/**"
+                ).hasAnyRole("STAFF", "ADMIN")
+
                 // Các đường dẫn khác cần authen
                 .anyRequest()
                 .authenticated());
