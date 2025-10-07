@@ -1,6 +1,7 @@
 package com.example.librarymanagementwebsite.feature.bookcopy;
 
 import com.example.librarymanagementwebsite.feature.bookcopy.dto.BookCopyResponse;
+import com.example.librarymanagementwebsite.feature.bookcopy.dto.BookCopyListResult;
 import com.example.librarymanagementwebsite.util.ApiResponse;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
@@ -17,14 +18,18 @@ public class BookCopyController {
     BookCopyService bookCopyService;
 
     @GetMapping
-    public ApiResponse<?> getBookCopy(@RequestParam Integer bookId,
-                                      @RequestParam(defaultValue = "0") int page,
+    public ApiResponse<BookCopyListResult> getBookCopy(@RequestParam Integer bookId,
+                                      @RequestParam(defaultValue = "1") int page,
                                       @RequestParam(defaultValue = "10") int size) {
-        Page<BookCopyResponse> response = bookCopyService.getBookCopies(bookId, page, size);
+        int zeroBasedPage = Math.max(0, page - 1);
+        Page<BookCopyResponse> response = bookCopyService.getBookCopies(bookId, zeroBasedPage, size);
 
-        return ApiResponse.builder()
-                .message("Get book copies for book with id: " + bookId)
-                .result(response)
+        BookCopyListResult payload = new BookCopyListResult();
+        payload.setItems(response.getContent());
+        payload.setTotal(response.getTotalElements());
+
+        return ApiResponse.<BookCopyListResult>builder()
+                .result(payload)
                 .build();
     }
 

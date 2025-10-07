@@ -7,6 +7,8 @@ import org.mapstruct.Mapping;
 
 @Mapper(componentModel = "spring")
 public interface BookCopyMapper {
+    @Mapping(target = "id", source = "copyId")
+    @Mapping(target = "bookId", source = "book.bookId")
     @Mapping(target = "title", source = "book.title")
     @Mapping(target = "isbn", source = "book.isbn")
     @Mapping(target = "author", source = "book.author")
