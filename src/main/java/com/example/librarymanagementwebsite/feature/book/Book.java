@@ -37,6 +37,9 @@ public class Book {
     @Column(columnDefinition = "TEXT")
     private String description;
 
+    @Column(name = "image_url", columnDefinition = "TEXT")
+    private String imageUrl;
+
     // quan hệ với Publisher
     @ManyToOne
     @JoinColumn(name = "publisher_id", referencedColumnName = "publisher_id")
