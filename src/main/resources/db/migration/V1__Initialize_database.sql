@@ -62,6 +62,7 @@ CREATE TABLE books
     author           VARCHAR(100) NOT NULL,
     publication_year INT,
     description      TEXT,
+    image_url       TEXT,
     publisher_id     INT          REFERENCES publishers (publisher_id) ON DELETE SET NULL,
     category_id      INT          REFERENCES categories (category_id) ON DELETE SET NULL,
     created_at       TIMESTAMP DEFAULT CURRENT_TIMESTAMP,

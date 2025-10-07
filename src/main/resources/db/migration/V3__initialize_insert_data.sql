@@ -32,7 +32,8 @@ INSERT INTO category_shelving (category_id, shelf_id)
 VALUES (1, 1), -- Thiếu nhi → A1
        (2, 2), -- Khoa học → A2
        (3, 3), -- Văn học → B1
-       (4, 4); -- Kỹ năng sống → B2
+       (4, 4);
+-- Kỹ năng sống → B2
 
 -- =========================
 -- INSERT books
@@ -46,12 +47,25 @@ VALUES ('Doraemon tập 1', '9786042081234', 'Fujiko F Fujio', 1992, 'Truyện t
 -- =========================
 -- INSERT book_copies (mỗi sách vài bản sao gán vào slot)
 -- =========================
-INSERT INTO book_copies (book_id, barcode, status, slot_id)
-VALUES (1, 'BC001', 'Available', 1),
-       (1, 'BC002', 'Loaned', 2),
-       (2, 'BC003', 'Available', 4),
-       (3, 'BC004', 'Available', 7),
-       (4, 'BC005', 'Reserved', 10);
+INSERT INTO book_copies (book_id, barcode, barcode_image_url, status, slot_id)
+VALUES (1, 'BK-2-1759415841178-483',
+        'https://res.cloudinary.com/deyrszube/image/upload/v1759415867/barcodes/BK-2-1759415841178-483.png',
+        'Available',
+        1),
+       (1, 'BK-2-1759415843425-194',
+        'https://res.cloudinary.com/deyrszube/image/upload/v1759415868/barcodes/BK-2-1759415843425-194.png', 'Loaned',
+        2),
+       (2, 'BK-2-1759415844582-189',
+        'https://res.cloudinary.com/deyrszube/image/upload/v1759415870/barcodes/BK-2-1759415844582-189.png',
+        'Available',
+        4),
+       (3, 'BK-2-1759415846654-361',
+        'https://res.cloudinary.com/deyrszube/image/upload/v1759415872/barcodes/BK-2-1759415846654-361.png',
+        'Available',
+        7),
+       (4, 'BK-2-1759415847855-415',
+        'https://res.cloudinary.com/deyrszube/image/upload/v1759415873/barcodes/BK-2-1759415847855-415.png', 'Reserved',
+        10);
 
 -- =========================
 -- INSERT members
@@ -64,10 +78,10 @@ VALUES ('Nguyễn Văn A', 'a@example.com', '0909123456', 'Hà Nội', 'CARD001'
 -- =========================
 -- INSERT loans
 -- =========================
-INSERT INTO loans (loan_code,copy_id, member_id, loan_date, due_date, return_date, status)
-VALUES ('L001',2, 1, '2025-09-01', '2025-09-15', NULL, 'Active'),
-       ('L002',3, 2, '2025-08-10', '2025-08-24', '2025-08-22', 'Returned'),
-       ('L003',4, 3, '2025-07-05', '2025-07-19', NULL, 'Overdue');
+INSERT INTO loans (loan_code, copy_id, member_id, loan_date, due_date, return_date, status)
+VALUES ('L001', 2, 1, '2025-09-01', '2025-09-15', NULL, 'Active'),
+       ('L002', 3, 2, '2025-08-10', '2025-08-24', '2025-08-22', 'Returned'),
+       ('L003', 4, 3, '2025-07-05', '2025-07-19', NULL, 'Overdue');
 
 -- =========================
 -- INSERT reservations
