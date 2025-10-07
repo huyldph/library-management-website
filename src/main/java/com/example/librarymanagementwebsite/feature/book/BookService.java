@@ -2,6 +2,7 @@ package com.example.librarymanagementwebsite.feature.book;
 
 import com.example.librarymanagementwebsite.feature.book.dto.BookRequest;
 import com.example.librarymanagementwebsite.feature.book.dto.BookResponse;
+import com.example.librarymanagementwebsite.feature.book.dto.BookSearchResponse;
 import com.example.librarymanagementwebsite.feature.book.mapper.BookMapper;
 import com.example.librarymanagementwebsite.feature.category.Category;
 import com.example.librarymanagementwebsite.feature.category.CategoryRepository;
@@ -35,6 +36,33 @@ public class BookService {
 
         return bookRepository.findAll(pageable)
                 .map(bookMapper::toResponse);
+    }
+
+    public Page<BookSearchResponse> searchBooks(String query, String category, int page, int size) {
+        Sort sort = Sort.by(Sort.Direction.DESC, "createdAt");
+        Pageable pageable = PageRequest.of(page, size, sort);
+
+        Page<Book> pageResult = bookRepository.searchBooks(query, category, pageable);
+
+        return pageResult.map(book -> {
+            BookSearchResponse dto = new BookSearchResponse();
+            dto.setBookId(book.getBookId());
+            dto.setTitle(book.getTitle());
+            dto.setIsbn(book.getIsbn());
+            dto.setAuthor(book.getAuthor());
+            dto.setImageUrl(book.getImageUrl());
+            dto.setPublicationYear(book.getPublicationYear());
+            dto.setDescription(book.getDescription());
+            dto.setPublisherName(book.getPublisher() != null ? book.getPublisher().getPublisherName() : null);
+            dto.setCategoryName(book.getCategory() != null ? book.getCategory().getCategoryName() : null);
+            long totalCopies = book.getBookCopies() != null ? book.getBookCopies().size() : 0;
+            long availableCopies = book.getBookCopies() != null ? book.getBookCopies().stream()
+                    .filter(bc -> bc.getStatus() != null && bc.getStatus().name().equalsIgnoreCase("Available"))
+                    .count() : 0;
+            dto.setTotalCopies(totalCopies);
+            dto.setAvailableCopies(availableCopies);
+            return dto;
+        });
     }
 
     public BookResponse getBookById(Integer id) {

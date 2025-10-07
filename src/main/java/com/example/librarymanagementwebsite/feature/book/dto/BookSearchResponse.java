@@ -2,8 +2,9 @@ package com.example.librarymanagementwebsite.feature.book.dto;
 
 import lombok.Data;
 
+
 @Data
-public class BookResponse {
+public class BookSearchResponse {
     private Integer bookId;
     private String title;
     private String isbn;

@@ -14,6 +14,8 @@ public interface BookMapper {
 
     @Mapping(target = "publisherName", source = "publisher.publisherName")
     @Mapping(target = "categoryName", source = "category.categoryName")
+    @Mapping(target = "totalCopies", expression = "java(book.getBookCopies() == null ? 0L : (long) book.getBookCopies().size())")
+    @Mapping(target = "availableCopies", expression = "java(book.getBookCopies() == null ? 0L : book.getBookCopies().stream().filter(bc -> bc.getStatus() != null && bc.getStatus().name().equalsIgnoreCase(\"Available\")).count())")
     BookResponse toResponse(Book book);
 
     void updateBook(BookRequest request, @MappingTarget Book book);

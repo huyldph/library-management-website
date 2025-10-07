@@ -3,6 +3,7 @@ package com.example.librarymanagementwebsite.feature.book;
 import com.example.librarymanagementwebsite.util.ApiResponse;
 import com.example.librarymanagementwebsite.feature.book.dto.BookRequest;
 import com.example.librarymanagementwebsite.feature.book.dto.BookResponse;
+import com.example.librarymanagementwebsite.feature.book.dto.BookListResult;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
@@ -17,11 +18,19 @@ public class BookController {
     BookService bookService;
 
     @GetMapping
-    ApiResponse<?> getAllBooks(@RequestParam(defaultValue = "0") int page,
-                               @RequestParam(defaultValue = "10") int size) {
-        var result = bookService.getAllBooks(page, size);
-        return ApiResponse.builder()
-                .result(result)
+    ApiResponse<BookListResult> getAllBooks(@RequestParam(required = false) String query,
+                                            @RequestParam(required = false) String category,
+                                            @RequestParam int page,
+                                            @RequestParam int size) {
+        int zeroBasedPage = Math.max(0, page - 1); // FE sends 1-based, convert to 0-based
+        var searchPage = bookService.searchBooks(query, category, zeroBasedPage, size);
+
+        BookListResult payload = new BookListResult();
+        payload.setItems(searchPage.getContent());
+        payload.setTotal(searchPage.getTotalElements());
+
+        return ApiResponse.<BookListResult>builder()
+                .result(payload)
                 .build();
     }
 
