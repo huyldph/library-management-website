@@ -43,6 +43,15 @@ public class LoanService {
         return loans.map(loanMapper::toResponse);
     }
 
+    public Page<LoanResponse> getPublicLoansByMemberId(Integer memberId, int page, int size) {
+        Sort sort = Sort.by(Sort.Direction.DESC, "createdAt");
+        Pageable pageable = PageRequest.of(page, size, sort);
+
+        Page<Loan> loans = loanRepository.findByMemberId(memberId, pageable);
+
+        return loans.map(loanMapper::toResponse);
+    }
+
     public Page<LoanResponse> getLoans(int page, int size) {
         Sort sort = Sort.by(Sort.Direction.DESC, "createdAt");
         Pageable pageable = PageRequest.of(page, size, sort);

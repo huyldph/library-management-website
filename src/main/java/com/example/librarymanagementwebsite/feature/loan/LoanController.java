@@ -43,6 +43,19 @@ public class LoanController {
                 .build();
     }
 
+    @GetMapping("/public/{memberId}")
+    ApiResponse<?> getPublicLoansByMemberId(
+            @PathVariable Integer memberId,
+            @RequestParam(value = "page", defaultValue = "0") int page,
+            @RequestParam(value = "size", defaultValue = "10") int size
+    ) {
+        Page<LoanResponse> loans = loanService.getPublicLoansByMemberId(memberId, page, size);
+        return ApiResponse.builder()
+                .result(loans)
+                .message("Success")
+                .build();
+    }
+
     @PostMapping("/checkout")
     ApiResponse<?> checkout(
             @RequestParam String cardNumber,
