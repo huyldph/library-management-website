@@ -7,7 +7,6 @@ import lombok.*;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Random;
 
@@ -71,6 +70,9 @@ public class Member {
         if (registrationDate == null) {
             registrationDate = LocalDate.now();
         }
+        if (expiryDate == null) {
+            expiryDate = registrationDate.plusYears(1);
+        }
     }
 
     @PreUpdate
@@ -80,10 +82,9 @@ public class Member {
     }
 
     private String renderCardNumber() {
-        String datePart = LocalDate.now().format(DateTimeFormatter.BASIC_ISO_DATE);
         int randomPart = new Random().nextInt(9000) + 1000;
 
-        return "CARD-" + datePart + "-" + randomPart;
+        return "CARD-" + randomPart;
     }
 
     // Check thẻ hết hạn

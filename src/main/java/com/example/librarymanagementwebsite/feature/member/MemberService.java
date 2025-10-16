@@ -30,6 +30,13 @@ public class MemberService {
         return memberMapper.toResponse(member);
     }
 
+    public MemberResponse getMemberByCardNumber(String cardNumber) {
+        Member member = memberRepository.findByCardNumber(cardNumber)
+                .orElseThrow(() -> new RuntimeException("Member not found with ID: " + cardNumber));
+
+        return memberMapper.toResponse(member);
+    }
+
     public Page<MemberResponse> getMembers(int page, int size) {
         Sort sort = Sort.by(Sort.Direction.DESC, "createdAt");
         Pageable pageable = PageRequest.of(page, size, sort);

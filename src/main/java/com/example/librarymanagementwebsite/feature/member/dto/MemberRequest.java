@@ -2,8 +2,6 @@ package com.example.librarymanagementwebsite.feature.member.dto;
 
 import lombok.Data;
 
-import java.time.LocalDate;
-
 import jakarta.validation.constraints.*;
 
 @Data
@@ -25,11 +23,4 @@ public class MemberRequest {
 
     @Size(max = 255, message = "Address cannot exceed 255 characters")
     private String address;
-
-    @NotNull(message = "Registration date is required")
-    private LocalDate registrationDate;
-
-    @NotNull(message = "Expiry date is required")
-    @Future(message = "Expiry date must be in the future")
-    private LocalDate expiryDate;
 }

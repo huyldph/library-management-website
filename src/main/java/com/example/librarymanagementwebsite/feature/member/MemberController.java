@@ -40,6 +40,15 @@ public class MemberController {
                 .build();
     }
 
+    @GetMapping("/card-number/{cardNumber}")
+    public ApiResponse<?> getMemberByCardNumber(@PathVariable String cardNumber) {
+        MemberResponse memberResponse = memberService.getMemberByCardNumber(cardNumber);
+        return ApiResponse.builder()
+                .result(memberResponse)
+                .message("Member retrieved successfully")
+                .build();
+    }
+
     @PostMapping("/create")
     public ApiResponse<?> createMember(@Valid @RequestBody MemberRequest memberRequest) {
         MemberResponse memberResponse = memberService.createMember(memberRequest);
