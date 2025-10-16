@@ -94,6 +94,7 @@ public class SecurityConfig {
                 // phân quyền cho các endpoint /api/v1/members
                 .requestMatchers(
                         "/api/v1/members/{memberId}",
+                        "/api/v1/members/card-number/{cardNumber}",
                         "/api/v1/members/create",
                         "/api/v1/members/update/**"
                 )
@@ -104,7 +105,8 @@ public class SecurityConfig {
 
                 // phân quyền cho các endpoint /api/v1/loans
                 .requestMatchers(HttpMethod.GET,
-                        "/api/v1/loans/by-member"
+                        "/api/v1/loans/by-member",
+                        "/api/v1/loans/public/{memberId}"
                 )
                 .permitAll()
                 .requestMatchers(
@@ -130,6 +132,9 @@ public class SecurityConfig {
 
         // Tắt CSRF (thường tắt khi dùng API REST, không cần CSRF token)
         httpSecurity.csrf(AbstractHttpConfigurer::disable);
+        
+        // Cấu hình CORS
+        httpSecurity.cors(cors -> {});
 
         return httpSecurity.build();
     }
